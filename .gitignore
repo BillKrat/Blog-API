@@ -396,3 +396,8 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+blogweb/.angular/cache/18.0.4/blogweb/.tsbuildinfo
+blogweb/.angular/cache/18.0.4/vite/deps/_metadata.json
+blogweb/.angular/cache/18.0.4/blogweb/angular-compiler.db-lock
+blogweb/.angular/cache/18.0.4/blogweb/.tsbuildinfo
+blogweb/.angular/cache/18.0.4/vite/deps/_metadata.json
