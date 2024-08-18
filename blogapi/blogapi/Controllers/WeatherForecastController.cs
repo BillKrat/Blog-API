@@ -1,4 +1,5 @@
-public class WeatherForecastController{
+namespace blogapi.Controllers; 
+public class WeatherForecastController {
     public WeatherForecastController() { }    
 
     public dynamic Get(){
