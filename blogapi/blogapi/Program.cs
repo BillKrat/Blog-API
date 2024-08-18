@@ -18,11 +18,15 @@ builder.Services.AddIdentityApiEndpoints<IdentityUser>().
          AddEntityFrameworkStores<ApplicationDbContext>();
 
 var app = builder.Build();
+
 app.MapIdentityApi<IdentityUser>();
 
 var config = app.Services.GetService<IConfiguration>();
 var connect = config?.GetValue<string>("gwnconnection");
 
+// Add services to the container.
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
+    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 // https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/
 // Configure the HTTP request pipeline.
@@ -37,7 +41,7 @@ app.UseHttpsRedirection();
 app.MapGet("/weatherforecast", () => new WeatherForecastController().Get())
     .WithName("GetWeatherForecast")
     .WithOpenApi()
-    .RequireAuthorization()
+    //.RequireAuthorization()
     ;
     
 //app.MapSwagger().RequireAuthorization();
