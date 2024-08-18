@@ -4,10 +4,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideAuth0 } from '@auth0/auth0-angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthService, AuthConfigService } from '@auth0/auth0-angular';
 import { ButtonModule } from 'primeng/button';
 import { AuthButtonComponent } from './AuthButtonComponent';
-
+import { environment as env } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -22,13 +21,7 @@ import { AuthButtonComponent } from './AuthButtonComponent';
   ],
   providers: [
     provideClientHydration(),
-    provideAuth0({
-      domain: 'dev-a0hjb1v0jos2opg2.us.auth0.com',
-      clientId: 'vccpAHztTEWWkYWqiJ19SE02jtJUGrdT',
-      authorizationParams: {
-        redirect_uri: "https://localhost:4200"
-      }
-    })
+    provideAuth0({...env.auth})
   ],
   bootstrap: [AppComponent]
 })
