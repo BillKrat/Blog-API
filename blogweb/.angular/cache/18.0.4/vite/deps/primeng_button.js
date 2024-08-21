@@ -12,7 +12,7 @@ import {
   NgStyle,
   NgTemplateOutlet,
   isPlatformBrowser
-} from "./chunk-WMOMIUVI.js";
+} from "./chunk-FSPAL4HE.js";
 import {
   ChangeDetectionStrategy,
   Component,

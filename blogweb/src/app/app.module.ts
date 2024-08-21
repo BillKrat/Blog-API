@@ -7,17 +7,19 @@ import { AppComponent } from './app.component';
 import { ButtonModule } from 'primeng/button';
 import { AuthButtonComponent } from './AuthButtonComponent';
 import { environment as env } from '../environments/environment';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
   ],
-  imports: [
+  imports: [ 
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     ButtonModule,
-    AuthButtonComponent
+    AuthButtonComponent,
+    CommonModule
   ],
   providers: [
     provideClientHydration(),

@@ -1,7 +1,13 @@
-namespace blogapi.Controllers; 
-public class WeatherForecastController {
-    public WeatherForecastController() { }    
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
+namespace blogapi.Controllers; 
+
+[Authorize]
+[ApiController]
+[Route("[controller]")]
+public class WeatherForecastController {
+    [HttpGet]
     public dynamic Get(){
         var summaries = new[]
         {
