@@ -14,7 +14,12 @@ if(app.Environment.IsDevelopment())
 {
     app.UseSwaggerApp();
 }
-
+app.UseCors(builder => builder
+       .AllowAnyHeader()
+       .AllowAnyMethod()
+       .AllowAnyOrigin()
+    );
+    
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
