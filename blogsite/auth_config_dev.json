@@ -1,0 +1,8 @@
+{
+  "domain": "dev-a0hjb1v0jos2opg2.us.auth0.com",
+  "clientId": "vccpAHztTEWWkYWqiJ19SE02jtJUGrdT",
+  "authorizationParams": {
+    "audience": "https://localhost:4200"
+  },
+  "apiUri": "https://localhost:5175"
+}

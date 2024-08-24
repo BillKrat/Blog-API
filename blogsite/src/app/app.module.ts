@@ -1,13 +1,24 @@
-import { Injectable, NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-import { AuthModule, AuthClientConfig, provideAuth0 } from '@auth0/auth0-angular';
+import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthButtonComponent } from './auth.button.component';
 import { CommonModule } from '@angular/common';
-import { environment as env } from '../environments/environment';
-import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
+import { environmentdev as envdev } from '../environments/environment.dev';
+import { UserProfileComponent } from './app.user.profile';
+import { provideAuth0 } from '@auth0/auth0-angular';
+import { inject, NgModule } from '@angular/core';
+import { HttpEvent, HttpHandlerFn, HttpRequest, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { Observable } from 'rxjs/internal/Observable';
+import { AuthService } from '@auth0/auth0-angular';
+
+export function authInterceptor(
+  req: HttpRequest<unknown>,
+  next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
+    var state = inject(AuthService).appState$;
+    console.log('INTERCEPTOR',req);
+  return next(req);
+}
 
 @NgModule({
   declarations: [
@@ -18,19 +29,14 @@ import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
     BrowserAnimationsModule,
     AppRoutingModule,
     AuthButtonComponent,
+    UserProfileComponent,
     CommonModule
   ],
   providers: [
-    provideAuth0({...env.auth}),
-    provideHttpClient(withFetch())
+    provideAuth0({...envdev.auth}),
+    provideHttpClient(withInterceptors([authInterceptor]))
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-@Injectable({providedIn: 'root'})
-export class ConfigService {
-  constructor(private http: HttpClient) {
-    // This service can now make HTTP requests via `this.http`.
-  }
-}
+ 

@@ -51,9 +51,18 @@
       <app-auth-button/>
       <p>Congratulations! Your app is running. 🎉</p>
       <button (click)="onSave()">Save</button>
+      <hr>
+      <p style="color: red;">
+        {{errorMessage | json}}
+      </p>
+      <p style="color: green;">
+        {{successMessage | json}}
+      </p>  
+      <hr>
     </div>
     <div class="divider" role="separator" aria-label="Divider"></div>
     <div class="right-side">
+      <app-user-profile/>
       <div class="pill-group">
         @for (item of [
           { title: 'Explore the Docs', link: 'https://angular.dev' },
