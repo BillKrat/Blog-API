@@ -10,14 +10,18 @@ import { provideAuth0 } from '@auth0/auth0-angular';
 import { inject, NgModule } from '@angular/core';
 import { HttpEvent, HttpHandlerFn, HttpRequest, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
-import { AuthService } from '@auth0/auth0-angular';
+import { securityService } from './services/security.service';
 
 export function authInterceptor(
   req: HttpRequest<unknown>,
   next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
-    var state = inject(AuthService).appState$;
-    console.log('INTERCEPTOR',req);
-  return next(req);
+    var token = inject(securityService).getToken();
+    const newReq = req.clone({
+      headers: req.headers.append('Authorization', `Bearer ${token}` ),
+    });
+    console.log('INTERCEPTOR:',newReq.headers);
+
+  return next(newReq);
 }
 
 @NgModule({
@@ -33,6 +37,7 @@ export function authInterceptor(
     CommonModule
   ],
   providers: [
+    securityService,
     provideAuth0({...envdev.auth}),
     provideHttpClient(withInterceptors([authInterceptor]))
   ],
