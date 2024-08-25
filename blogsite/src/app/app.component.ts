@@ -1,7 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -30,7 +28,6 @@ export class AppComponent implements OnInit{
         error: err => {
           console.log('EXCEPTION',err);
           this.errorMessage = err;
-          // We can show an error message to the user or retry the request.
         }
       });
   }

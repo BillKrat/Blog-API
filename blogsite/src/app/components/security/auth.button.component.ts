@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { securityService } from './services/security.service';
+import { securityService } from '../../services/security.service';
 @Component({
   imports:[CommonModule],
   selector: 'app-auth-button',

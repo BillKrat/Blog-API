@@ -23,7 +23,7 @@ const {
 };
 
 // populate exported values for client use
-export const environmentdev = {
+export const environment = {
   production: false,
   auth: {
     // GetTokenSilentlyOptions format follows:
