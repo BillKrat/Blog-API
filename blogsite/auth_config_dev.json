@@ -1,8 +1,14 @@
 {
+  "cacheMode": "", 
+  "authorizationParams": {
+    "redirect_uri" : "https://localhost:4200",
+    "scope": "",
+    "audience": "https://dev-a0hjb1v0jos2opg2.us.auth0.com/api/v2/"
+  },
+  "timeoutInSeconds": 0,
+  "detailedResponse" : true,
   "domain": "dev-a0hjb1v0jos2opg2.us.auth0.com",
   "clientId": "vccpAHztTEWWkYWqiJ19SE02jtJUGrdT",
-  "authorizationParams": {
-    "audience": "https://localhost:4200"
-  },
-  "apiUri": "https://localhost:5175"
+  "apiUri": "https://localhost:5175",
+  "errorPath": ""
 }
