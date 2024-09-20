@@ -4,8 +4,8 @@ using blogapi.Extensions;
 var builder = WebApplication
     .CreateBuilder(args)
     .ConfigureContext()
-    .ConfigureSecurity()
     .ConfigureServices()
+    .ConfigureSecurity()
     .ConfigureSwagger();
 
 var app = builder.Build();

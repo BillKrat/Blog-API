@@ -11,7 +11,8 @@ public class WeatherForecastController {
     public dynamic Get(){
         var summaries = new[]
         {
-            "Here I is","Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+            "Here I is","Freezing", "Bracing", "Chilly", "Cool", "Mild", 
+            "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
         var forecast =  Enumerable.Range(1, 5).Select(index =>
