@@ -8,31 +8,36 @@ namespace blogapi.Extensions {
             var configuration = builder.Configuration;
 
             var services = builder.Services;
-            var domain = configuration["Auth0:Domain"];
-            var audience = configuration["Auth0:Audience"];
+            var domain = configuration["Auth0:Domain_ADD-TO-USER-SECRETS"];
+            var audience = configuration["Auth0:Audience_ADD-TO-USER-SECRETS"];
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            
+
+            if(domain!=null &&audience!=null)
             builder.Services.AddSwaggerGen(options =>
                 {
-                    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo {
+                    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                    {
                         Title = "API Documentation",
                         Version = "v1.0",
                         Description = ""
                     });
-                    
+
                     options.ResolveConflictingActions(x => x.First());
 
-                    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme {
+                    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                    {
                         Type = SecuritySchemeType.OAuth2,
                         BearerFormat = "JWT",
-                        Flows = new OpenApiOAuthFlows {
-                            Implicit  = new OpenApiOAuthFlow {
+                        Flows = new OpenApiOAuthFlows
+                        {
+                            Implicit = new OpenApiOAuthFlow
+                            {
                                 TokenUrl = new Uri($"https://{domain}/oauth/token"),
                                 AuthorizationUrl = new Uri($"https://{domain}/authorize?audience={audience}"),
-                                Scopes = new Dictionary<string, string>{ { "openid", "OpenId" } }
+                                Scopes = new Dictionary<string, string> { { "openid", "OpenId" } }
                             }
                         }
                     });
@@ -40,15 +45,17 @@ namespace blogapi.Extensions {
                     options.AddSecurityRequirement(new OpenApiSecurityRequirement {
                         {
                             new OpenApiSecurityScheme {
-                                Reference = new OpenApiReference { 
-                                    Type = ReferenceType.SecurityScheme, 
-                                    Id = "oauth2" 
+                                Reference = new OpenApiReference {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "oauth2"
                                 }
                             },
                             new[] { "openid" }
                         }
                     });
                 });
+
+
             return builder;
         }
     

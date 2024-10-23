@@ -27,4 +27,11 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Framework.Bll\Framework.Bll.csproj" />
+    <ProjectReference Include="..\Framework.Dal.SqlLite\Framework.Dal.SqlLite.csproj" />
+    <ProjectReference Include="..\Framework.Dal.Sql\Framework.Dal.Sql.csproj" />
+    <ProjectReference Include="..\Framework.Shared\Framework.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
