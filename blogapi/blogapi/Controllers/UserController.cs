@@ -10,7 +10,7 @@ namespace blogapi.Controllers;
 public class UserController(IBll bll)
 {
     [HttpGet]
-    public dynamic Get()
+    public dynamic Get(string IDal)
     {
         return bll.GetUserList();
     }

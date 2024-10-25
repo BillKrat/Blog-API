@@ -1,12 +1,13 @@
 // https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-8.0&tabs=visual-studio-code
 using blogapi.Extensions;
+using Framework.Shared.Extensions.Bootstrap;
+using Framework.Shared.Web.Extensions.Bootstrap;
 
 var builder = WebApplication
     .CreateBuilder(args)
-    .ConfigureContext()
-    .ConfigureServices()
-    .ConfigureSecurity()
-    .ConfigureSwagger();
+    .ConfigureServices() // blogapi/Extensions/ServiceExtensions
+    .ConfigureSecurity() // Framework.Shared.Web/Bootstrap/SecurityExtensions
+    .ConfigureSwagger(); // Framework.Shared.Web/Bootstrap/SwaggerExtensions
 
 var app = builder.Build();
 
