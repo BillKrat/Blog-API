@@ -7,7 +7,7 @@ namespace Framework.Dal.Sql.Logic
     {
         public List<UserDto> GetUserList()
         {
-            throw new NotImplementedException();
+            return [new() { Data = "Sql User" }];
         }
 
     }

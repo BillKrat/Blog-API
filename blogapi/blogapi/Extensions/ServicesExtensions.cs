@@ -15,11 +15,11 @@ namespace blogapi.Extensions
             var services = builder.Services;
             var configuration = builder.Configuration;
 
-            // User BLL registration - scoped so that each request
-            // we have one instance of the user
+            // User BLL registration - scoped so that each request will have new instance
+            // allowing for dynamic configuration of BLL per request
             services.AddScoped<IBll, BllFacade>();
 
-            // User IDal registrations - singletons so the same instance used
+            // User IDal registrations - singletons so the same instance used 
             services.AddSingleton<IDal, DalSqlFacade>();
             services.AddSingleton<IDal, DalSqlLiteFacade>();
             services.AddSingleton<IDal, DalWeatherForecast>();
@@ -29,7 +29,7 @@ namespace blogapi.Extensions
                 // FOR DEVELOPMENT PURPOSES ONLY - until framework evolves to permit real world
                 // usage. The Request https://localhost:5175/User?IDal=DalSqlFacade would result
                 // in an instance of DalSqlFacade being returned because it is registered above
-                var instance = provider.GetInstanceFromQueryStr<IDal>();
+                var instance = provider.GetInstanceFromQueryStrName<IDal>();
                 return (IDalFacade?) instance ?? new NopDal();
             });
 

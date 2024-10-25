@@ -11,7 +11,7 @@ namespace Framework.Dal.SqlLite.Logic
     {
         public List<UserDto> GetUserList()
         {
-            throw new NotImplementedException();
+            return [new() { Data = "SqlLite User" }];
         }
     }
 }

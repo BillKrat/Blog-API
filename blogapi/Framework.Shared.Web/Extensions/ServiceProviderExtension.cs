@@ -6,7 +6,7 @@ namespace blogapi.Extensions
 {
     public static class ServiceProviderExtension
     {
-        public static T? GetInstanceFromQueryStr<T>(this IServiceProvider provider)
+        public static T? GetInstanceFromQueryStrName<T>(this IServiceProvider provider)
             where T : class
         {
             var typeList = provider.GetServices<T>();
