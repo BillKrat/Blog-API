@@ -8,10 +8,11 @@ namespace blogapi.Extensions
 {
     public static class ServiceProviderExtension
     {
-        public static T GetInstanceFromQueryStr<T>(this IServiceProvider provider, string namedKey)
+        public static T GetInstanceFromQueryStr<T>(this IServiceProvider provider)
             where T : class
         {
             var typeList = provider.GetServices<T>();
+            var namedKey = typeof(T).Name;
 
             StringValues named;
             var httpContext = provider.GetService<IHttpContextAccessor>().HttpContext;
