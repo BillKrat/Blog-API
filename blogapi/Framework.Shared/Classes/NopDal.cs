@@ -5,11 +5,11 @@ namespace Framework.Shared.Classes
 {
     public class NopDal : IDal, IDalFacade
     {
-        public List<UserDto> GetUserList()
+        public List<UserDto> GetUserList(EventArgs e)
         {
             return new List<UserDto>
             {
-                
+
             };
         }
     }

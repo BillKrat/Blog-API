@@ -1,17 +1,15 @@
 ﻿using Framework.Shared.Dto;
+using Framework.Shared.Event;
 using Framework.Shared.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Framework.Dal.SqlLite.Logic
 {
     public class DalSqlLiteFacade : IDalFacade
     {
-        public List<UserDto> GetUserList()
+        public List<UserDto> GetUserList(EventArgs e)
         {
-            return [new() { Data = "SqlLite User" }];
+            var args = e as DataEventArgs<string>;
+            return [new UserDto { Data = $" DalSqlLiteFacade: {args.Data}" }];
         }
     }
 }

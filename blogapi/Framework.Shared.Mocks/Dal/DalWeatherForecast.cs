@@ -1,15 +1,11 @@
 ﻿using Framework.Shared.Dto;
 using Framework.Shared.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Framework.Shared.Mocks.Dal
 {
-    public class DalWeatherForecast: IDalFacade
+    public class DalWeatherForecast : IDalFacade
     {
-        public List<UserDto> GetUserList()
+        public List<UserDto> GetUserList(EventArgs e)
         {
             var returnList = new List<UserDto>();
             foreach (var item in Get())

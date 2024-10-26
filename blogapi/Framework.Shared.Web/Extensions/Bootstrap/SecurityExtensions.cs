@@ -8,20 +8,28 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Framework.Shared.Web.Extensions.Bootstrap
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class SecurityExtensions
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <returns></returns>
         public static WebApplicationBuilder ConfigureSecurity(this WebApplicationBuilder builder)
         {
             var configuration = builder.Configuration;
 
             var services = builder.Services;
-            var domain = configuration["Auth0:Domain"];
-            var audience = configuration["Auth0:Audience"];
 
             services.AddHttpContextAccessor(); // Required for IHttpContextAccessor
-
             services.AddTransient<IPrincipal>(
                 provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);
+
+            var domain = configuration["Auth0:Domain"];
+            var audience = configuration["Auth0:Audience"];
 
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

@@ -4,6 +4,6 @@ namespace Framework.Shared.Interfaces
 {
     public interface IDalFacade : IDal
     {
-        List<UserDto> GetUserList();
+        List<UserDto> GetUserList(EventArgs e);
     }
 }
