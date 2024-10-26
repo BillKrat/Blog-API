@@ -27,7 +27,8 @@ namespace blogapi.Extensions
 
             // Event if not authenticated the IPrincipal instance will be available
             services.AddHttpContextAccessor();
-            services.AddTransient<IPrincipal>((provider) => provider.GetRequiredService<IHttpContextAccessor>().HttpContext.User);
+            services.AddTransient<IPrincipal>((provider) =>
+                provider.GetRequiredService<IHttpContextAccessor>().HttpContext.User);
 
             // Configured in middleware
             services.AddScoped<IUserState, UserState>();

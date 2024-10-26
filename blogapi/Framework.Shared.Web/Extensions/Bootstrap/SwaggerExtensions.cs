@@ -6,12 +6,12 @@ using System.Reflection;
 namespace Framework.Shared.Extensions.Bootstrap
 {
     /// <summary>
-    /// 
+    /// Swagger Extensions
     /// </summary>
     public static class SwaggerExtensions
     {
         /// <summary>
-        /// 
+        /// Configure Swagger
         /// </summary>
         /// <param name="builder"></param>
         /// <returns></returns>
@@ -23,7 +23,7 @@ namespace Framework.Shared.Extensions.Bootstrap
             // Auth0 configuration
             var domain = configuration["Auth0:Domain"];
             var audience = configuration["Auth0:Audience"];
-            var isConfigured = domain!=null && audience!=null;
+            var isConfigured = domain != null && audience != null;
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
