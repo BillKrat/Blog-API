@@ -32,31 +32,47 @@ namespace blogapi.Extensions
             services.AddTransient<IPrincipal>((provider) =>
                 provider.GetRequiredService<IHttpContextAccessor>().HttpContext.User);
 
-            // Configured in middleware
+            // The following scoped parameters are configured in the Shared.Web\Bootstrap
+            // MiddleWareExtensions for UseSharedMiddleWare function (invoked in Program)
             services.AddScoped<IUserState, UserState>();
             services.AddScoped<IRequestState, RequestState>();
 
-            // User BLL registrations - scoped to enable dynamic replacement
+            // User BLL; key scoped so we can configure BLL for controller with attribute,
+            // e.g., The BlogTopicController has a primary constructor as follows:
+            //
+            //     BlogTopicController([FromKeyedServices(BlogTopicConstants.BlogTopic)] IBll bll)
+            //
             services.AddKeyedScoped<IBll, BllBlogTopic>(BlogTopicConstants.BlogTopic);
             services.AddKeyedScoped<IBll, BllDataFacade>(FrameworkConstants.DataFacade);
 
-            // User IDal registrations - singletons so the same instance used 
+            // User IDal - when IDalFacade is resolved an instance of IDal will be returned
             services.AddTransient<IDal, DalSqlFacade>();
             services.AddTransient<IDal, DalSqlLiteFacade>();
             services.AddTransient<IDal, DalWeatherForecast>();
 
-            // Default data provider
-            services.AddScoped<IDefaultDataProvider, DalSqlFacade>();
+            // Default data provider to use for data operations
+            services.AddScoped<IDefaultDataProvider, DalSqlLiteFacade>();
 
-            // Data layer transient so it can be determined each request
+            // Data layer transient - this will allow the data layer facade to be
+            // determined each time IDalFacade is resolved
             services.AddTransient<IDalFacade>((provider) =>
             {
-                // Get the data facade to use for IDal which is registered numerous classes. If the
-                // controller is BlogTopic then the parameter IDal will be used to determine the instance,
-                // e.g., ?IDal=DalSqlFacade.  Otherwise the IDefaultDataProvider (above) will be used.
-                var instance = provider.GetInstanceFromQueryStrName<IDal>();
-                var requestState = provider.Resolve<IRequestState>();
-                return (IDalFacade?)instance ?? new NopDal(requestState);
+                // GetInstanceFromQueryStrName requires an opt-in since parameters
+                // have the ability to change data access layer - currently we only
+                // opt-in for BlogTopic controller which will be used to demo Blog topics
+                var forControllers = new Dictionary<string, object>{
+                    { nameof(IDal), BlogTopicConstants.BlogTopic }
+                };
+
+                // Get the data facade to use for IDal which has numerous implementations
+                // registered (above). If the controller is BlogTopic then the parameter IDal
+                // will be used to determine the instance, e.g., ?IDal=DalSqlFacade.  Otherwise
+                // the configured IDefaultDataProvider [registered above] will be used.
+                var dal = provider.GetInstanceFromQueryStrName<IDal>(forControllers);
+
+                // Note that if an unsupported IDal is requested that dal will be null.  As a
+                // result we use "new"j for NopDal so we have to provide the resolved parameter
+                return (IDalFacade?)dal ?? new NopDal(provider.Resolve<IRequestState>());
             });
 
             // Add services to the container.

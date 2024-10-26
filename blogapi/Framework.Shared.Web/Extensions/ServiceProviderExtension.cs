@@ -1,4 +1,4 @@
-﻿using Feature.BlogTopic;
+﻿using Framework.Shared.Extensions;
 using Framework.Shared.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,8 +14,11 @@ namespace blogapi.Extensions
         /// </summary>
         /// <typeparam name="T">Used to retrieve all instances of T in container</typeparam>
         /// <param name="provider"></param>
+        /// <param name="forControllers"
         /// <returns></returns>
-        public static T? GetInstanceFromQueryStrName<T>(this IServiceProvider provider)
+        public static T? GetInstanceFromQueryStrName<T>(
+            this IServiceProvider provider,
+            Dictionary<string, object> forControllers = default)
             where T : class
         {
             // Get a list of all registered versions of T, e.g., IDal
@@ -26,7 +29,8 @@ namespace blogapi.Extensions
             var requestState = provider.GetService<IRequestState>();
 
             // Get the parameter value for namedKey "IDal", e.g., DalSqlFacade - this feature is specific to BlogTopic
-            if (requestState.Parameters.ContainsKey(namedKey) && requestState.Controller == BlogTopicConstants.BlogTopic)
+            if (requestState.Parameters.ContainsKey(namedKey)
+                && forControllers.KeyValueExists(namedKey, requestState.Controller))
             {
                 var named = requestState.Parameters[namedKey];
 
