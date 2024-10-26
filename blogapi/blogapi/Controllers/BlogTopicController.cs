@@ -18,7 +18,7 @@ public class BlogTopicController([FromKeyedServices(BlogTopicConstants.BlogTopic
     /// <summary>
     /// DalWeatherForecast, DalSqlFacade, and DalSqlLiteFacade supported
     /// </summary>
-    /// <param name="IDal">Specifies the interface to pull implementation list for</param>
+    /// <param name="IDal">Specifies the interface to pull implementation list for, e.g., DalWeatherForecast</param>
     /// <returns></returns>
     [AllowAnonymous]
     [HttpGet("DalSwap")]
