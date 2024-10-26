@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace blogapi.Extensions
 {
     /// <summary>
-    /// 
+    /// Service provider extensions
     /// </summary>
     public static class ServiceProviderExtension
     {

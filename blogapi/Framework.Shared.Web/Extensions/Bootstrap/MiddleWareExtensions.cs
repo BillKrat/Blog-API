@@ -12,7 +12,7 @@ namespace Framework.Shared.Web.Extensions.Bootstrap
     public static class MiddleWareExtensions
     {
         /// <summary>
-        /// 
+        /// Middleware to initialize request and user state
         /// </summary>
         /// <param name="app"></param>
         /// <returns></returns>
@@ -21,7 +21,6 @@ namespace Framework.Shared.Web.Extensions.Bootstrap
             app.Use(async (context, next) =>
             {
                 var httpContext = context.RequestServices.Resolve<IHttpContextAccessor>()?.HttpContext;
-                var request = httpContext.Request;
                 var principal = context.RequestServices.Resolve<IPrincipal>();
                 var userState = context.RequestServices.Resolve<IUserState>();
                 var requestState = context.RequestServices.Resolve<IRequestState>();
@@ -29,15 +28,13 @@ namespace Framework.Shared.Web.Extensions.Bootstrap
                 userState.IsAuthenticated = principal.Identity.IsAuthenticated;
                 userState.Id = principal.Identity.Name;
 
+                var request = httpContext.Request;
                 requestState.BaseUrl = $"{request.Scheme}://{request.Host}";
                 foreach (var query in httpContext.Request.Query)
                     requestState.Parameters.Add(query.Key, query.Value);
 
-
                 await next.Invoke();
             });
-
-
             return app;
         }
     }
