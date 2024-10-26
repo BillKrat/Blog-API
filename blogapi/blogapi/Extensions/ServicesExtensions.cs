@@ -5,6 +5,7 @@ using Framework.Dal.SqlLite.Logic;
 using Framework.Shared.Classes;
 using Framework.Shared.Interfaces;
 using Framework.Shared.Mocks.Dal;
+using Framework.Shared.State;
 using System.Security.Principal;
 
 namespace blogapi.Extensions
@@ -32,9 +33,12 @@ namespace blogapi.Extensions
                 return principal;
             });
 
+            services.AddScoped<IUserState, UserState>();
+            services.AddScoped<IRequestState, RequestState>();
+
             // User BLL registration - scoped so that each request will have new instance
             // allowing for dynamic configuration of BLL per request
-            services.AddTransient<IBll, BllFacade>();
+            services.AddScoped<IBll, BllFacade>();
 
             // User IDal registrations - singletons so the same instance used 
             services.AddTransient<IDal, DalSqlFacade>();

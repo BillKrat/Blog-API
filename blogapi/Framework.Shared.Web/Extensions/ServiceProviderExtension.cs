@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Framework.Shared.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Primitives;
-using System.Security.Principal;
 
 namespace blogapi.Extensions
 {
@@ -11,24 +9,25 @@ namespace blogapi.Extensions
     public static class ServiceProviderExtension
     {
         /// <summary>
-        /// 
+        /// Retrieve all implementations of T and then uses nameof(T) to find value
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">Used to retrieve all instances of T in container</typeparam>
         /// <param name="provider"></param>
         /// <returns></returns>
         public static T? GetInstanceFromQueryStrName<T>(this IServiceProvider provider)
             where T : class
         {
+            // Get a list of all registered versions of T, e.g., IDal
             var typeList = provider.GetServices<T>();
-            var namedKey = typeof(T).Name;
+            var namedKey = typeof(T).Name; // "IDal" 
 
-            var principal = provider.GetService<IPrincipal>();
+            // Get our request state and from it pull our parameters list
+            var requestState = provider.GetService<IRequestState>();
 
-            var httpContext = provider.GetService<IHttpContextAccessor>()?.HttpContext;
-            if (httpContext == null) return default;
+            // Get the parameter value for namedKey "IDal", e.g., DalSqlFacade 
+            var named = requestState.Parameters[namedKey];
 
-            httpContext.Request.Query.TryGetValue(namedKey, out StringValues named);
-
+            // Iterate through our list and if we have a match - return it
             foreach (var instance in typeList)
                 if (instance.ToString().Split('.').Last() == named) return instance;
 

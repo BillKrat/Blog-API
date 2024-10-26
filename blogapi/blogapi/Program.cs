@@ -11,7 +11,9 @@ var builder = WebApplication
 
 var app = builder.Build();
 
-if(app.Environment.IsDevelopment())
+app.UseSharedMiddleWare();
+
+if (app.Environment.IsDevelopment())
 {
     app.UseSwaggerApp();
 }
@@ -20,7 +22,7 @@ app.UseCors(builder => builder
        .AllowAnyMethod()
        .AllowAnyOrigin()
     );
-    
+
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
