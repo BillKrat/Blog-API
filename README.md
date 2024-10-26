@@ -1,2 +1,2 @@
 # Blog
-Blog - Angular with .NET Core api
+Blog API - ASP.NET Core 
