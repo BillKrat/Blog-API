@@ -1,4 +1,5 @@
-﻿using Framework.Shared.Interfaces;
+﻿using Feature.BlogTopic;
+using Framework.Shared.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace blogapi.Extensions
@@ -24,12 +25,20 @@ namespace blogapi.Extensions
             // Get our request state and from it pull our parameters list
             var requestState = provider.GetService<IRequestState>();
 
-            // Get the parameter value for namedKey "IDal", e.g., DalSqlFacade 
-            var named = requestState.Parameters[namedKey];
+            // Get the parameter value for namedKey "IDal", e.g., DalSqlFacade - this feature is specific to BlogTopic
+            if (requestState.Parameters.ContainsKey(namedKey) && requestState.Controller == BlogTopicConstants.BlogTopic)
+            {
+                var named = requestState.Parameters[namedKey];
 
-            // Iterate through our list and if we have a match - return it
-            foreach (var instance in typeList)
-                if (instance.ToString().Split('.').Last() == named) return instance;
+                // Iterate through our list and if we have a match - return it
+                foreach (var instance in typeList)
+                    if (instance.ToString().Split('.').Last() == named) return instance;
+            }
+            else
+            {
+                var defaultProvider = provider.GetService<IDefaultDataProvider>();
+                if (defaultProvider != null) return (T)defaultProvider;
+            }
 
             return default;
         }

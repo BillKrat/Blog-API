@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Feature.BlogTopic\Feature.BlogTopic.csproj" />
     <ProjectReference Include="..\Framework.Shared\Framework.Shared.csproj" />
   </ItemGroup>
 

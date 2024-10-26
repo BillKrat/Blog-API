@@ -1,8 +1,10 @@
-
+using Feature.BlogTopic;
 using Framework.Bll.Logic;
 using Framework.Dal.Sql.Logic;
 using Framework.Dal.SqlLite.Logic;
 using Framework.Shared.Classes;
+using Framework.Shared.Constants;
+using Framework.Shared.Extensions;
 using Framework.Shared.Interfaces;
 using Framework.Shared.Mocks.Dal;
 using Framework.Shared.State;
@@ -34,23 +36,27 @@ namespace blogapi.Extensions
             services.AddScoped<IUserState, UserState>();
             services.AddScoped<IRequestState, RequestState>();
 
-            // User BLL registration - scoped so that each request will have new instance
-            // allowing for dynamic configuration of BLL per request
-            services.AddScoped<IBll, BllFacade>();
+            // User BLL registrations - scoped to enable dynamic replacement
+            services.AddKeyedScoped<IBll, BllBlogTopic>(BlogTopicConstants.BlogTopic);
+            services.AddKeyedScoped<IBll, BllDataFacade>(FrameworkConstants.DataFacade);
 
             // User IDal registrations - singletons so the same instance used 
             services.AddTransient<IDal, DalSqlFacade>();
             services.AddTransient<IDal, DalSqlLiteFacade>();
             services.AddTransient<IDal, DalWeatherForecast>();
 
+            // Default data provider
+            services.AddScoped<IDefaultDataProvider, DalSqlFacade>();
+
             // Data layer transient so it can be determined each request
             services.AddTransient<IDalFacade>((provider) =>
             {
-                // FOR DEVELOPMENT PURPOSES ONLY - until framework evolves to permit real world
-                // usage. The Request https://localhost:5175/User?IDal=DalSqlFacade would result
-                // in an instance of DalSqlFacade being returned because it is registered above
+                // Get the data facade to use for IDal which is registered numerous classes. If the
+                // controller is BlogTopic then the parameter IDal will be used to determine the instance,
+                // e.g., ?IDal=DalSqlFacade.  Otherwise the IDefaultDataProvider (above) will be used.
                 var instance = provider.GetInstanceFromQueryStrName<IDal>();
-                return (IDalFacade?)instance ?? new NopDal();
+                var requestState = provider.Resolve<IRequestState>();
+                return (IDalFacade?)instance ?? new NopDal(requestState);
             });
 
             // Add services to the container.

@@ -4,6 +4,6 @@ namespace Framework.Shared.Interfaces
 {
     public interface IBll
     {
-        List<UserDto> GetUserList();
+        List<DataDto> GetList();
     }
 }

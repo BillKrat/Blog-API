@@ -3,14 +3,16 @@ using Framework.Shared.Interfaces;
 
 namespace Framework.Shared.Classes
 {
-    public class NopDal : IDal, IDalFacade
+    public class NopDal(IRequestState? requestState) : IDal, IDalFacade
     {
-        public List<UserDto> GetUserList(EventArgs e)
+        public List<DataDto> GetList(EventArgs e)
         {
-            return new List<UserDto>
-            {
-
-            };
+            var facadeDal = requestState.Parameters["IDal"].ToString();
+            return
+            [
+                new DataDto{ Data = "NO OPERATION "},
+                new DataDto{ Data = $"[{facadeDal}] is not a supported data access layer / facade!" }
+            ];
         }
     }
 }

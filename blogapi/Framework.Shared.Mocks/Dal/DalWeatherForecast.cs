@@ -3,14 +3,14 @@ using Framework.Shared.Interfaces;
 
 namespace Framework.Shared.Mocks.Dal
 {
-    public class DalWeatherForecast : IDalFacade
+    public class DalWeatherForecast : IDalFacade, IDefaultDataProvider
     {
-        public List<UserDto> GetUserList(EventArgs e)
+        public List<DataDto> GetList(EventArgs e)
         {
-            var returnList = new List<UserDto>();
+            var returnList = new List<DataDto>();
             foreach (var item in Get())
             {
-                returnList.Add(new UserDto
+                returnList.Add(new DataDto
                 {
                     Data = item
                 });

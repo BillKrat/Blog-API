@@ -29,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Feature.BlogTopic\Feature.BlogTopic.csproj" />
     <ProjectReference Include="..\Framework.Bll\Framework.Bll.csproj" />
     <ProjectReference Include="..\Framework.Dal.SqlLite\Framework.Dal.SqlLite.csproj" />
     <ProjectReference Include="..\Framework.Dal.Sql\Framework.Dal.Sql.csproj" />

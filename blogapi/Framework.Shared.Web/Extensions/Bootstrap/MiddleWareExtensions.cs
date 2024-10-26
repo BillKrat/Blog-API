@@ -30,6 +30,9 @@ namespace Framework.Shared.Web.Extensions.Bootstrap
 
                 var request = httpContext.Request;
                 requestState.BaseUrl = $"{request.Scheme}://{request.Host}";
+                requestState.Controller = request.RouteValues["controller"]?.ToString();
+                requestState.Path = request.Path.Value;
+                requestState.Scheme = request.Scheme;
                 foreach (var query in httpContext.Request.Query)
                     requestState.Parameters.Add(query.Key, query.Value);
 

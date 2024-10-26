@@ -4,12 +4,12 @@ using Framework.Shared.Interfaces;
 
 namespace Framework.Dal.SqlLite.Logic
 {
-    public class DalSqlLiteFacade : IDalFacade
+    public class DalSqlLiteFacade : IDalFacade, IDefaultDataProvider
     {
-        public List<UserDto> GetUserList(EventArgs e)
+        public List<DataDto> GetList(EventArgs e)
         {
             var args = e as DataEventArgs<string>;
-            return [new UserDto { Data = $" DalSqlLiteFacade: {args.Data}" }];
+            return [new DataDto { Data = $" DalSqlLiteFacade: {args.Data}" }];
         }
     }
 }
