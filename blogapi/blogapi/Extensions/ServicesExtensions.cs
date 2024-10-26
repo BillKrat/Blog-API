@@ -28,8 +28,10 @@ namespace blogapi.Extensions
             var configuration = builder.Configuration;
 
             // Event if not authenticated the IPrincipal instance will be available
+            // We'll use this in the Shared.Web\Extensions\Bootstrap\MiddleWareExtensions
+            // useSharedMiddleWare() function to populate the UserState object
             services.AddHttpContextAccessor();
-            services.AddTransient<IPrincipal>((provider) =>
+            services.AddScoped<IPrincipal>((provider) =>
                 provider.GetRequiredService<IHttpContextAccessor>().HttpContext.User);
 
             // The following scoped parameters are configured in the Shared.Web\Bootstrap
@@ -37,8 +39,8 @@ namespace blogapi.Extensions
             services.AddScoped<IUserState, UserState>();
             services.AddScoped<IRequestState, RequestState>();
 
-            // User BLL; key scoped so we can configure BLL for controller with attribute,
-            // e.g., The BlogTopicController has a primary constructor as follows:
+            // BLL - key scoped so we can configure BLL for controller using FromKeyedServices
+            // attribute, e.g., The BlogTopicController has a primary constructor as follows:
             //
             //     BlogTopicController([FromKeyedServices(BlogTopicConstants.BlogTopic)] IBll bll)
             //
