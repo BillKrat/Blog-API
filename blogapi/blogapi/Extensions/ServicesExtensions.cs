@@ -1,3 +1,4 @@
+using blogapi.Context;
 using Feature.BlogTopic;
 using Framework.Bll.Logic;
 using Framework.Dal.Sql.Logic;
@@ -38,6 +39,9 @@ namespace blogapi.Extensions
             // MiddleWareExtensions for UseSharedMiddleWare function (invoked in Program)
             services.AddScoped<IUserState, UserState>();
             services.AddScoped<IRequestState, RequestState>();
+
+            // Database context for the session
+            services.AddScoped<IBloggingContext, BloggingContext>();
 
             // BLL - key scoped so we can configure BLL for controller using FromKeyedServices
             // attribute, e.g., The BlogTopicController has a primary constructor as follows:
