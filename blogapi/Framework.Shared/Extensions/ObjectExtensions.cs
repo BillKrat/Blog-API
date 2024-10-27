@@ -1,5 +1,16 @@
 ﻿namespace Framework.Shared.Extensions
 {
+    /// <summary>======================================================================
+    //\ Namespace: Framework.Shared
+    //\  Filename: ObjectExtensions.cs
+    //\ Developer: Billkrat
+    //\   Created: 2024.10.27
+    //\   Purpose: Extensions for object? 
+    ///
+    /// Author		Date	Comments
+    /// ----------- ------- ----------------------------------------------------------
+    /// 
+    /// =====================================================================</summary>
     public static class ObjectExtensions
     {
         public static T? To<T>(this object? objectToCast)
