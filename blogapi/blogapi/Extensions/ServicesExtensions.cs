@@ -13,9 +13,17 @@ using System.Security.Principal;
 
 namespace blogapi.Extensions
 {
-    /// <summary>
-    /// Invoked by Program.cs
-    /// </summary>
+    /// <summary>======================================================================
+    /// Namespace: BlogApi
+    ///  Filename: ServicesExtensions.cs
+    /// Developer: Billkrat
+    ///   Created: 2024.10.27
+    ///   Purpose: Wire up the decoupled components as required for blog application
+    ///
+    /// Author		Date	Comments
+    /// ----------- ------- ----------------------------------------------------------
+    /// 
+    /// =====================================================================</summary>
     public static class ServicesExtensions
     {
         /// <summary>
@@ -23,35 +31,40 @@ namespace blogapi.Extensions
         /// </summary>
         /// <param name="builder"></param>
         /// <returns></returns>
-        public static WebApplicationBuilder ConfigureServices(this WebApplicationBuilder builder)
+        public static WebApplicationBuilder ConfigureServices(
+            this WebApplicationBuilder builder)
         {
             var services = builder.Services;
             var configuration = builder.Configuration;
 
             // Event if not authenticated the IPrincipal instance will be available
-            // We'll use this in the Shared.Web\Extensions\Bootstrap\MiddleWareExtensions
+            // We'll use this in Shared.Web\Extensions\Bootstrap\MiddleWareExtensions
             // useSharedMiddleWare() function to populate the UserState object
             services.AddHttpContextAccessor();
             services.AddScoped<IPrincipal>((provider) =>
                 provider.GetRequiredService<IHttpContextAccessor>().HttpContext.User);
 
-            // The following scoped parameters are configured in the Shared.Web\Bootstrap
-            // MiddleWareExtensions for UseSharedMiddleWare function (invoked in Program)
+            // The following scoped parameters are configured in the
+            // Shared.Web\Bootstrap\MiddleWareExtensions for UseSharedMiddleWare
+            // function (invoked by Program.cs
             services.AddScoped<IUserState, UserState>();
             services.AddScoped<IRequestState, RequestState>();
 
             // Database context for the session
             services.AddScoped<IBloggingContext, BloggingContext>();
 
-            // BLL - key scoped so we can configure BLL for controller using FromKeyedServices
-            // attribute, e.g., The BlogTopicController has a primary constructor as follows:
+            // BLL - key scoped so we can configure BLL for controller using
+            // FromKeyedServices attribute, e.g., The BlogTopicController has a
+            // primary constructor as follows:
             //
-            //     BlogTopicController([FromKeyedServices(BlogTopicConstants.BlogTopic)] IBll bll)
+            //  BlogTopicController(
+            //      [FromKeyedServices(BlogTopicConstants.BlogTopic)] IBll bll
+            //  )
             //
             services.AddKeyedScoped<IBll, BllBlogTopic>(BlogTopicConstants.BlogTopic);
             services.AddKeyedScoped<IBll, BllDataFacade>(FrameworkConstants.DataFacade);
 
-            // User IDal - when IDalFacade is resolved an instance of IDal will be returned
+            // User IDal, when IDalFacade is resolved instance of IDal will be returned
             services.AddTransient<IDal, DalSqlFacade>();
             services.AddTransient<IDal, DalSqlLiteFacade>();
             services.AddTransient<IDal, DalWeatherForecast>();
@@ -63,29 +76,32 @@ namespace blogapi.Extensions
             // determined each time IDalFacade is resolved
             services.AddTransient<IDalFacade>((provider) =>
             {
-                // GetInstanceFromQueryStrName requires an opt-in since parameters
-                // have the ability to change data access layer - currently we only
-                // opt-in for BlogTopic controller which will be used to demo Blog topics
+                // GetInstanceFromQueryStrName requires an opt-in since parameters have
+                // the ability to change data access layer - currently we only opt-in
+                // for BlogTopic controller which will be used to demo Blog topics
                 var forControllers = new Dictionary<string, object>{
                     { nameof(IDal), BlogTopicConstants.BlogTopic }
                 };
 
-                // Get the data facade to use for IDal which has numerous implementations
-                // registered (above). If the controller is BlogTopic then the parameter IDal
-                // will be used to determine the instance, e.g., ?IDal=DalSqlFacade.  Otherwise
-                // the configured IDefaultDataProvider [registered above] will be used.
+                // Get the data facade to use for IDal which has numerous
+                // implementations registered (above). If the controller is BlogTopic
+                // then the parameter IDal will be used to determine the instance,
+                // e.g., ?IDal=DalSqlFacade.  Otherwise the configured
+                // IDefaultDataProvider [registered above] will be used.
                 var dal = provider.GetInstanceFromQueryStrName<IDal>(forControllers);
 
-                // Note that if an unsupported IDal is requested that dal will be null.  As a
-                // result we use "new"j for NopDal so we have to provide the resolved parameter
-                return (IDalFacade?)dal ?? new NopDal(provider.Resolve<IRequestState>());
+                // Note that if an unsupported IDal is requested that dal will be null.
+                // As a result we use "new"j for NopDal so we have to provide the
+                // resolved parameter
+                return (IDalFacade?)dal
+                    ?? new NopDal(provider.Resolve<IRequestState>());
             });
 
             // Add services to the container.
             services.AddControllers()
                     .AddNewtonsoftJson(options =>
-                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-
+                     options.SerializerSettings.ReferenceLoopHandling
+                        = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             return builder;
         }
     }

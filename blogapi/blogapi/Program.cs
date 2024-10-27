@@ -1,6 +1,5 @@
 // https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-8.0&tabs=visual-studio-code
 using blogapi.Extensions;
-using Framework.Shared.Extensions.Bootstrap;
 using Framework.Shared.Web.Extensions.Bootstrap;
 
 var builder = WebApplication
@@ -11,7 +10,7 @@ var builder = WebApplication
 
 var app = builder.Build();
 
-app.UseSharedMiddleWare();
+app.UseSharedMiddleWare(); // Framework.Shared.Web/Bootstrap/MiddleWareExtensions
 
 if (app.Environment.IsDevelopment())
 {

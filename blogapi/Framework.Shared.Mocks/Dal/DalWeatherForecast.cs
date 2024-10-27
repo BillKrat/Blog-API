@@ -3,6 +3,17 @@ using Framework.Shared.Interfaces;
 
 namespace Framework.Shared.Mocks.Dal
 {
+    /// <summary>======================================================================
+    /// Namespace: Framework.Shared.Mocks
+    ///  Filename: DalWeatherForecast.cs
+    /// Developer: Billkrat
+    ///   Created: 2024.10.27
+    ///   Purpose: Mock data access layer facade 
+    ///
+    /// Author		Date	Comments
+    /// ----------- ------- ----------------------------------------------------------
+    ///  
+    /// =====================================================================</summary>
     public class DalWeatherForecast : IDalFacade, IDefaultDataProvider
     {
         public List<DataDto> GetList(EventArgs e)

@@ -3,13 +3,19 @@ using Framework.Shared.Event;
 using Framework.Shared.Interfaces;
 using System.Text.Json;
 
-namespace Framework.Bll.Logic
+namespace Feature.BlogTopic
 {
-    /// <summary>
-    /// Intended for blog topic online example
-    /// </summary>
-    /// <param name="dataAccessLayer"></param>
-    /// <param name="user"></param>
+    /// <summary>======================================================================
+    /// Namespace: Feature.BlogTopic
+    ///  Filename: BllBlogTopic.cs
+    /// Developer: BillKrat
+    ///   Created: date
+    ///   Purpose: Logic for blogs that will reference API
+    ///
+    /// Author		Date	Comments
+    /// ----------- ------- ----------------------------------------------------------
+    ///  
+    /// =====================================================================</summary>
     public class BllBlogTopic(IDalFacade dataAccessLayer, IUserState user) : IBll
     {
         /// <summary>

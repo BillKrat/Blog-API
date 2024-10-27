@@ -6,7 +6,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Framework.Dal.SqlLite.Logic
 {
-    public class DalSqlLiteFacade(IBloggingContext db) : IDalFacade, IDefaultDataProvider
+    /// <summary>======================================================================
+    /// Namespace: Framework.Dal.SqlLite
+    ///  Filename: DalSqlLiteFacade.cs
+    /// Developer: Billkrat
+    ///   Created: 2024.10.27
+    ///   Purpose: Data access layer facade for SqlLite
+    ///
+    /// Author		Date	Comments
+    /// ----------- ------- ----------------------------------------------------------
+    ///  
+    /// =====================================================================</summary>
+    public class DalSqlLiteFacade(IBloggingContext db)
+        : IDalFacade, IDefaultDataProvider
     {
         public DbContext dbUtil => (DbContext)db;
 
@@ -29,7 +41,10 @@ namespace Framework.Dal.SqlLite.Logic
                 {
                     postData += $"{post.PostId}: {post.Title} |  {post.Content}";
                 }
-                returnList.Add(new DataDto { Data = $"{record.BlogId}: {record.Url} \r\n{postData}" });
+                returnList.Add(new DataDto
+                {
+                    Data = $"{record.BlogId}: {record.Url} \r\n{postData}"
+                });
             }
 
             return returnList;
@@ -40,14 +55,23 @@ namespace Framework.Dal.SqlLite.Logic
             var blog = db.Blogs.OrderBy(b => b.BlogId).Last();
 
             // Create
-            dbUtil.Add(new Blog { Url = $"{DateTime.Now}:: http://blogs.msdn.com/adonet" });
+            dbUtil.Add(new Blog
+            {
+                Url = $"{DateTime.Now}:: http://blogs.msdn.com/adonet"
+            });
             dbUtil.SaveChanges();
 
             // Read
             blog = db.Blogs.OrderByDescending(o => o.BlogId).FirstOrDefault();
 
             blog.Posts.Add(
-                new Post { BlogId = blog.BlogId, Title = $"{DateTime.Now}:: Hello World", Content = "I wrote an app using EF Core!" });
+                new Post
+                {
+                    Blog = blog,
+                    BlogId = blog.BlogId,
+                    Title = $"{DateTime.Now}:: Hello World",
+                    Content = "Blah de blah"
+                });
 
             dbUtil.SaveChanges();
         }

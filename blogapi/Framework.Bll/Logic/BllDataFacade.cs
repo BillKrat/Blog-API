@@ -5,6 +5,17 @@ using System.Text.Json;
 
 namespace Framework.Bll.Logic
 {
+    /// <summary>======================================================================
+    /// Namespace: Framework.Bll
+    ///  Filename: BllDataFacade.cs
+    /// Developer: Billkrat
+    ///   Created: 2024.10.27
+    ///   Purpose: Business logic layer facade
+    ///
+    /// Author		Date	Comments
+    /// ----------- ------- ----------------------------------------------------------
+    ///  
+    /// =====================================================================</summary>
     /// <summary>
     /// CRUDL Facade for managing the Blog 
     /// </summary>

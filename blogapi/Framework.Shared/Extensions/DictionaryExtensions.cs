@@ -1,5 +1,16 @@
 ﻿namespace Framework.Shared.Extensions
 {
+    /// <summary>======================================================================
+    /// Namespace: Framework.Shared
+    ///  Filename: DictionaryExtensions.cs
+    /// Developer: Billkrat
+    ///   Created: 2024.10.27
+    ///   Purpose: Dictionary<string,object> extensions
+    ///
+    /// Author		Date	Comments
+    /// ----------- ------- ----------------------------------------------------------
+    ///  
+    /// =====================================================================</summary>
     public static class DictionaryExtensions
     {
         public static T? GetKeyValue<T>(
@@ -10,7 +21,7 @@
             if (dictionary == null || !dictionary.TryGetValue(key, out object? value))
                 return defaultIfNotDefined;
 
-            return (T)value;
+            return value.To<T>();
         }
 
         public static bool KeyValueExists(

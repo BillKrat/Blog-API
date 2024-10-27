@@ -2,6 +2,17 @@
 
 namespace Framework.Test
 {
+    /// <summary>======================================================================
+    /// Namespace: Framework.Test
+    ///  Filename: SharedFixture.cs
+    /// Developer: Billkrat
+    ///   Created: 2024.10.27
+    ///   Purpose: Unit test for the Framework.Shared project
+    ///
+    /// Author		Date	Comments
+    /// ----------- ------- ----------------------------------------------------------
+    /// 
+    /// =====================================================================</summary>
     [TestClass]
     public class SharedFixture
     {

@@ -5,10 +5,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace blogapi.Controllers
 {
-    /// <summary>
-    /// Blog Topic Controller
-    /// </summary>
-    /// <param name="bll"></param>
+    /// <summary>======================================================================
+    /// Namespace: BlogApi
+    ///  Filename: BlogTopicController.cs
+    /// Developer: Billkrat
+    ///   Created: 2024.10.27
+    ///   Purpose: Controller for handling services that will support blog topics
+    ///            that developer can access (referenced by Blog entry)
+    ///
+    /// Author		Date	Comments
+    /// ----------- ------- ----------------------------------------------------------
+    /// 
+    /// =====================================================================</summary>
     [Authorize]
     [ApiController]
     [Route("[controller]")]
