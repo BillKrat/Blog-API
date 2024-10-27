@@ -19,7 +19,8 @@ namespace blogapi.Controllers
     [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class RestController([FromKeyedServices(FrameworkConstants.DataFacade)] IBll bll)
+    public class RestController(
+        [FromKeyedServices(FrameworkConstants.DataFacade)] IBll bll)
     {
         /// <summary>
         /// Get data from the Data Facade

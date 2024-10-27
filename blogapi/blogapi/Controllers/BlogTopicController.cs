@@ -20,15 +20,17 @@ namespace blogapi.Controllers
     [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class BlogTopicController([FromKeyedServices(BlogTopicConstants.BlogTopic)] IBll bll)
+    public class BlogTopicController(
+        [FromKeyedServices(BlogTopicConstants.BlogTopic)] IBll bll)
     {
         /// <summary>
         /// DalWeatherForecast, DalSqlFacade, and DalSqlLiteFacade supported
         /// </summary>
-        /// <param name="IDal">Specifies the interface to pull implementation list for, e.g., DalWeatherForecast
+        /// <param name="IDal">Specifies the interface to pull implementation list 
+        /// for, e.g., DalWeatherForecast, DalSqlLiteFacade and DalSqlFacade
         /// </param>
-        /// <returns>Although it appears as though IDal is not used [in code] it becomes part of the parameter 
-        /// query list which is used by framework
+        /// <returns>Although it appears as though IDal is not used [in code] it 
+        /// becomes part of the parameter  query list which is used by framework
         /// </returns>
         [AllowAnonymous]
         [HttpGet("DalSwap")]
