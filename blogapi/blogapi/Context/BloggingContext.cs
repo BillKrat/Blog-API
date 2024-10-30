@@ -1,65 +1,108 @@
-﻿using Framework.App.Model;
-using Framework.Shared.Interfaces;
+﻿using Framework.Shared.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace blogapi.Context
+namespace blogapi.Context;
+
+/// <summary>
+/// 
+/// </summary>
+public partial class BloggingContext : DbContext, IBloggingContext
 {
-    /// <summary>======================================================================
-    /// Namespace: BlogApi
-    ///  Filename: BloggingContext.cs
-    /// Developer: Billkrat
-    ///   Created: 2024.10.27
-    ///   Purpose: EF Context for the blogging application
-    ///      Init: https://learn.microsoft.com/en-us/ef/core/get-started/overview/first-app?tabs=netcore-cli
-    ///    Update: https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/applying?tabs=dotnet-core-cli
-    ///
-    /// Author		Date	Comments
-    /// ----------- ------- ----------------------------------------------------------
+    public string CurrentDal { get; set; }
+
+    /// <summary>
     /// 
-    /// =====================================================================</summary>
-    public class BloggingContext : DbContext, IBloggingContext
+    /// </summary>
+    public BloggingContext()
     {
-        /// <summary>
-        /// Blogs table
-        /// </summary>
-        public DbSet<Blog> Blogs { get; set; }
-        /// <summary>
-        /// Posts table
-        /// </summary>
-        public DbSet<Post> Posts { get; set; }
-        /// <summary>
-        /// Tripes table
-        /// </summary>
-        public DbSet<Triple> Triples { get; set; }
-
-        /// <summary>
-        /// Path to blogging.db
-        /// </summary>
-        public string DbPath { get; }
-
-        /// <summary>
-        /// Constructor configures path blogging.db
-        /// </summary>
-        public BloggingContext()
-        {
-            var path = $"{Environment.CurrentDirectory}\\App_Data\\";
-            DbPath = Path.Join(path, "blogging.db");
-        }
-
-        /// <summary>
-        /// The following configures EF to create a Sqlite database file in the
-        /// special "local" folder for your platform.
-        /// </summary>
-        /// <param name="options"></param>
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite($"Data Source={DbPath}");
     }
-}
-/*  The following will initialize the database
- 
-dotnet tool install --global dotnet-ef
-dotnet add package Microsoft.EntityFrameworkCore.Design
-dotnet ef migrations add InitialCreate
-dotnet ef database update
- 
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="options"></param>
+    public BloggingContext(DbContextOptions<BloggingContext> options)
+        : base(options)
+    {
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual DbSet<Triple> Triples { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual DbSet<TriplesCrossRef> TriplesCrossRefs { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="optionsBuilder"></param>
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        //var path = $"{Environment.CurrentDirectory}\\App_Data\\";
+        //var connectionString = Path.Join(path, "blogging.db");
+        //optionsBuilder.UseSqlite($"Data Source={connectionString}");
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="modelBuilder"></param>
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Triple>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_Triples_Id");
+
+            entity.HasIndex(e => new { e.Subject, e.Predicate, e.Object }, "IX_TriplesSubPredObj").IsUnique();
+
+            entity.HasIndex(e => e.Object, "IX_Triples_Object");
+
+            entity.HasIndex(e => e.Predicate, "IX_Triples_Predicate");
+
+            entity.HasIndex(e => e.Subject, "IX_Triples_Subject");
+
+            entity.Property(e => e.Object)
+                .HasMaxLength(254)
+                .IsUnicode(false);
+            entity.Property(e => e.Predicate)
+                .HasMaxLength(254)
+                .IsUnicode(false);
+            entity.Property(e => e.Subject)
+                .HasMaxLength(254)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<TriplesCrossRef>(entity =>
+        {
+            entity.ToTable("TriplesCrossRef");
+
+            entity.HasIndex(e => e.ChildId, "IX_TriplesCrossRef_ChildId");
+
+            entity.HasIndex(e => e.ParentId, "IX_TriplesCrossRef_ParentId");
+
+            entity.HasIndex(e => e.TripleId, "IX_TriplesCrossRef_TripleId");
+        });
+
+        OnModelCreatingPartial(modelBuilder);
+    }
+
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+
+
+    /*  
+        -- SQL SERVER: The following was used to generate the above context from an existing database / tables
+        Scaffold-DbContext "Data Source=SQL.site.net;User ID=dbadmin;Password=1234;Initial Catalog=dbmain;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Context -Tables Triples, TriplesCrossRef -Context BloggingContext
+
+        -- SQL LITE: The following will initialize the database
+        dotnet tool install --global dotnet-ef
+        dotnet add package Microsoft.EntityFrameworkCore.Design
+        dotnet ef migrations add InitialCreate
+        dotnet ef database update
+
  */
+}

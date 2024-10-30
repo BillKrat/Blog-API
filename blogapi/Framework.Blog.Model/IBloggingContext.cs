@@ -1,4 +1,4 @@
-﻿using Framework.App.Model;
+﻿using blogapi.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace Framework.Shared.Interfaces
@@ -16,9 +16,7 @@ namespace Framework.Shared.Interfaces
     /// =====================================================================</summary>
     public interface IBloggingContext
     {
-        DbSet<Blog> Blogs { get; set; }
-        string DbPath { get; }
-        DbSet<Post> Posts { get; set; }
         DbSet<Triple> Triples { get; set; }
+        DbSet<TriplesCrossRef> TriplesCrossRefs { get; set; }
     }
 }

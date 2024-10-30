@@ -15,12 +15,24 @@ namespace Framework.Dal.Sql.Logic
     /// ----------- ------- ----------------------------------------------------------
     ///  
     /// =====================================================================</summary>
-    public class DalSqlFacade : IDalFacade, IDefaultDataProvider
+    public class DalSqlFacade(IBloggingContext db) : IDalFacade, IDefaultDataProvider
     {
         public List<DataDto> GetList(EventArgs e)
         {
             var args = e as DataEventArgs<string>;
-            return [new DataDto { Data = $" DalSqlFacade: {args.Data}" }];
+            var list = new List<DataDto>();
+            list.Add(new DataDto { Data = $" DalSqlFacade: {args.Data}" });
+
+            var dataList = db.Triples.ToList();
+            foreach (var record in dataList)
+            {
+                list.Add(new DataDto
+                {
+                    Data = $"{record.Subject}  {record.Predicate}  {record.Object}"
+                });
+            }
+
+            return list;
         }
 
     }

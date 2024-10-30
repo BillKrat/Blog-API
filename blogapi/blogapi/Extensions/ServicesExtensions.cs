@@ -9,6 +9,7 @@ using Framework.Shared.Extensions;
 using Framework.Shared.Interfaces;
 using Framework.Shared.Mocks.Dal;
 using Framework.Shared.State;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Principal;
 
 namespace blogapi.Extensions
@@ -49,6 +50,10 @@ namespace blogapi.Extensions
             // function (invoked by Program.cs
             services.AddScoped<IUserState, UserState>();
             services.AddScoped<IRequestState, RequestState>();
+
+            //services.AddScoped<BloggingContext>();
+            // TODO: Keyed scope?  SqlServer and SqlLiteServer
+            services.AddDbContext<BloggingContext>(options => options.UseSqlServer(configuration.GetConnectionString("SqlServer")));
 
             // Database context for the session
             services.AddScoped<IBloggingContext, BloggingContext>();
@@ -93,8 +98,10 @@ namespace blogapi.Extensions
                 // Note that if an unsupported IDal is requested that dal will be null.
                 // As a result we use "new"j for NopDal so we have to provide the
                 // resolved parameter
-                return (IDalFacade?)dal
+                var currentDal = (IDalFacade?)dal
                     ?? new NopDal(provider.Resolve<IRequestState>());
+
+                return currentDal;
             });
 
             // Add services to the container.
