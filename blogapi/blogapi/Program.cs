@@ -5,12 +5,16 @@ using Framework.Shared.Web.Extensions.Bootstrap;
 var builder = WebApplication
     .CreateBuilder(args)
     .ConfigureServices() // blogapi/Extensions/ServiceExtensions
-    .ConfigureSecurity() // Framework.Shared.Web/Bootstrap/SecurityExtensions
-    .ConfigureSwagger(); // Framework.Shared.Web/Bootstrap/SwaggerExtensions
+
+    // Framework.Shared.Web/Bootstrap/
+    .ConfigureSecurity() // SecurityExtensions
+    .ConfigureSwagger(); // SwaggerExtensions
 
 var app = builder.Build();
 
-app.UseSharedMiddleWare(); // Framework.Shared.Web/Bootstrap/MiddleWareExtensions
+// Framework.Shared.Web/Bootstrap
+app.UseUserMiddleWare();    // UseUserMiddleWareExtensions
+app.UseRequestMiddleWare(); // UseRequestMiddleWareExtensions
 
 if (app.Environment.IsDevelopment())
 {

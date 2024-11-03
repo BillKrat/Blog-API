@@ -21,5 +21,8 @@
         string? Controller { get; set; }
         string? Scheme { get; set; }
         string? Path { get; set; }
+        string? Host { get; set; }
+        int? Port { get; set; }
+        string? FullHost { get; set; }
     }
 }
