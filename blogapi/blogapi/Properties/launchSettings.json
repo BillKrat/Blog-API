@@ -6,9 +6,9 @@
 
   I updated the c:\windows\system32\drivers\etc\hosts file by including
         127.0.0.1		localhost
-        127.0.0.1		api.localhost.com
-        127.0.0.1		schema.localhost.com
-        127.0.0.1		www.localhost.com
+        127.0.0.1		api.localhost
+        127.0.0.1		schema.localhost
+        127.0.0.1		www.localhost
 */
 {
   "$schema": "http://json.schemastore.org/launchsettings.json",
