@@ -51,9 +51,12 @@ namespace blogapi.Extensions
             services.AddScoped<IUserState, UserState>();
             services.AddScoped<IRequestState, RequestState>();
 
-            //services.AddScoped<BloggingContext>();
-            // TODO: Keyed scope?  SqlServer and SqlLiteServer
-            services.AddDbContext<BloggingContext>(options => options.UseSqlServer(configuration.GetConnectionString("SqlServer")));
+            var isUsingSqlServer = configuration["isUsingSqlServer"].To<bool>();
+            if (isUsingSqlServer)
+            {
+                services.AddDbContext<BloggingContext>(options =>
+                    options.UseSqlServer(configuration.GetConnectionString("SqlServer")));
+            }
 
             // Database context for the session
             services.AddScoped<IBloggingContext, BloggingContext>();

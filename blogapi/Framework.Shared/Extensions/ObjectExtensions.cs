@@ -20,6 +20,7 @@
             if (objectToCast is T) return (T?)objectToCast;
             switch (typeof(T).FullName)
             {
+                case "System.Boolean": returnValue = objectToCast == null ? false : Boolean.Parse($"{objectToCast}"); break;
                 case "System.String": returnValue = $"{objectToCast}"; break;
             }
             return (T?)returnValue;

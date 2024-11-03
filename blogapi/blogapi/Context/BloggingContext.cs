@@ -8,7 +8,10 @@ namespace blogapi.Context;
 /// </summary>
 public partial class BloggingContext : DbContext, IBloggingContext
 {
-    public string CurrentDal { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public string? CurrentDal { get; set; }
 
     /// <summary>
     /// 
@@ -21,8 +24,7 @@ public partial class BloggingContext : DbContext, IBloggingContext
     /// 
     /// </summary>
     /// <param name="options"></param>
-    public BloggingContext(DbContextOptions<BloggingContext> options)
-        : base(options)
+    public BloggingContext(DbContextOptions<BloggingContext> options) : base(options)
     {
     }
 
@@ -42,9 +44,15 @@ public partial class BloggingContext : DbContext, IBloggingContext
     /// <param name="optionsBuilder"></param>
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        //var path = $"{Environment.CurrentDirectory}\\App_Data\\";
-        //var connectionString = Path.Join(path, "blogging.db");
-        //optionsBuilder.UseSqlite($"Data Source={connectionString}");
+        // The only way IsConfigured will be false is if the BloggingContext options are
+        // not set in ServicesExtensions, i.e., UseSqlServer was not invoked because the
+        // setting isUsingSqlServer is not set or is set to false - defaulting to SqlLite
+        if (!optionsBuilder.IsConfigured)
+        {
+            var path = $"{Environment.CurrentDirectory}\\App_Data\\";
+            var connectionString = Path.Join(path, "blogging.db");
+            optionsBuilder.UseSqlite($"Data Source={connectionString}");
+        }
     }
 
     /// <summary>

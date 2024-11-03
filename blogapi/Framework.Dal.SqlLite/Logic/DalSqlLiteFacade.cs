@@ -1,7 +1,6 @@
 ﻿using Framework.Shared.Dto;
 using Framework.Shared.Event;
 using Framework.Shared.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace Framework.Dal.SqlLite.Logic
 {
@@ -19,17 +18,22 @@ namespace Framework.Dal.SqlLite.Logic
     public class DalSqlLiteFacade(IBloggingContext db)
         : IDalFacade, IDefaultDataProvider
     {
-        public DbContext dbUtil => (DbContext)db;
-
         public List<DataDto> GetList(EventArgs e)
         {
-            var returnList = new List<DataDto>();
-
-            // Add the string provided by BLL
             var args = e as DataEventArgs<string>;
-            returnList.Add(new DataDto { Data = args.Data });
+            var list = new List<DataDto>();
+            list.Add(new DataDto { Data = $" DalSqlLiteFacade: [App_Data/blogging.db] {args.Data}" });
 
-            return returnList;
+            var dataList = db.Triples.ToList();
+            foreach (var record in dataList)
+            {
+                list.Add(new DataDto
+                {
+                    Data = $"{record.Subject}  {record.Predicate}  {record.Object}"
+                });
+            }
+
+            return list;
         }
     }
 }
