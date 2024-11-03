@@ -5,7 +5,6 @@
         www.localhost.com
 
   I updated the c:\windows\system32\drivers\etc\hosts file by including
-        127.0.0.1		localhost
         127.0.0.1		api.localhost
         127.0.0.1		schema.localhost
         127.0.0.1		www.localhost
@@ -26,7 +25,7 @@
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost.com:5175",
+      "applicationUrl": "https://localhost:5175",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -57,16 +56,6 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "applicationUrl": "https://schema.localhost:5175",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "https": {
-      "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7226;https://localhost:5175",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
