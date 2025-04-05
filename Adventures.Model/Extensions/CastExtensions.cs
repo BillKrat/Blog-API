@@ -1,4 +1,6 @@
-﻿using Adventures.Framework.Results;
+﻿using Adventures.Framework.Events;
+using Adventures.Framework.Results;
+using Adventures.Model.Events;
 using Adventures.Model.Results;
 
 namespace Adventures.Model.Extensions
@@ -9,5 +11,10 @@ namespace Adventures.Model.Extensions
         {
             return (RdfTripleResults?)results;
         }
+        public static RdfCrudlEventArgs? DownCast(this CrudlEventArgs? results)
+        {
+            return (RdfCrudlEventArgs?)results;
+        }
+
     }
 }

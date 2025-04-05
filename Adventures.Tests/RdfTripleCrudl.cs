@@ -5,6 +5,7 @@ using Adventures.Framework.Events;
 using Adventures.Framework.Interfaces;
 using Adventures.Model.DataSource;
 using Adventures.Model.Extensions;
+using Adventures.Model.Results;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Adventures.Tests
@@ -41,16 +42,21 @@ namespace Adventures.Tests
         [TestMethod]
         public void CanListTriples()
         {
+            // Register services with the container
             var services = new ServiceCollection();
             services.AddTransient<ICrudlBL, CrudlBL>();
             services.AddTransient<ICrudlDL, CrudlDL>();
             services.AddDbContext<ITripleStoreContext, TripleStoreContext>();
-
             var serviceProvider = services.BuildServiceProvider();
-            var crudlBl = serviceProvider.GetService<ICrudlBL>();
 
-            var result = crudlBl?.GetData(this, new CrudlEventArgs()).DownCast();
+            // Request our business logic class and request data. The data layer
+            // will provide a generic CrudlResult and the business layer a more
+            // specific RdfTripeResult so we'll down case
+            var crudlBl = serviceProvider.GetService<ICrudlBL>();
+            RdfTripleResults? result = crudlBl?
+                .GetData(this, new CrudlEventArgs()).DownCast();
             
+            // Assert unit test data
             var one = result?.Data?.FirstOrDefault(r => r.Id == "one");
             Assert.AreEqual("three", one?.Object);
             Assert.AreEqual("two", one?.Predicate);

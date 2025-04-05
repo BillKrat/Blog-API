@@ -15,5 +15,5 @@ public partial class RdfTriple
 
     public string Object { get; set; }
 
-    public byte[] Data { get; set; }
+    public byte[] Tag { get; set; }
 }
