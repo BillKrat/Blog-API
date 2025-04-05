@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Adventures.Framework.Events;
+using Adventures.Framework.Results;
 
 namespace Adventures.Framework.Interfaces
 {
     public interface ICrudlDL
     {
+        CrudlResult GetData(object sender, CrudlEventArgs e);
     }
 }

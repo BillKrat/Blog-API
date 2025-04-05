@@ -3,7 +3,7 @@
    "ContextClassName": "TripleStoreContext ",
    "ContextNamespace": null,
    "FilterSchemas": false,
-   "IncludeConnectionString": false,
+   "IncludeConnectionString": true,
    "ModelNamespace": null,
    "OutputContextPath": "X:\\Blog-API\\Adventures.Model\\DataSource\\",
    "OutputPath": "Models",

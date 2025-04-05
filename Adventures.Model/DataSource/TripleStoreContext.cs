@@ -9,12 +9,19 @@ namespace Adventures.Model.DataSource;
 
 public partial class TripleStoreContext : DbContext
 {
+    public TripleStoreContext()
+    {
+    }
+
     public TripleStoreContext(DbContextOptions<TripleStoreContext> options)
         : base(options)
     {
     }
 
     public virtual DbSet<RdfTriple> RdfTriples { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.UseSqlite("Data Source=X:\\Blog-API\\Adventures.Model\\DataSource\\TripleStore.db");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

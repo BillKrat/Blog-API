@@ -1,13 +1,16 @@
-﻿using Adventures.Framework.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Adventures.Data.Interfaces;
+using Adventures.Framework.Events;
+using Adventures.Framework.Interfaces;
+using Adventures.Framework.Results;
 
 namespace Adventures.Data.DataAccessComponent
 {
-    public class CrudlDL : ICrudlDL
+    public class CrudlDL(ITripleStoreContext context) : ICrudlDL
     {
+        public CrudlResult GetData(object sender, CrudlEventArgs e)
+        {
+            var results = context.RdfTriples.ToList();
+            return new CrudlResult(results);
+        }
     }
 }

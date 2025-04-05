@@ -8,4 +8,9 @@
     <UseVSTest>true</UseVSTest>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Adventures.Business\Adventures.Business.csproj" />
+    <ProjectReference Include="..\Adventures.Data\Adventures.Data.csproj" />
+  </ItemGroup>
+
 </Project>
