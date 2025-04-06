@@ -1,4 +1,4 @@
-﻿// Adventures.Model > Results > RdfTripleResults.cs
+﻿// Adventures.Framework > Utils > UtilFacade.cs
 /* ================================================================================
  * Copyright (c) 2025 Bill Kratochvil / email: bill@adventuresOnTheEdge.net
  * =================================================================================
@@ -15,17 +15,16 @@
  * 2025.04.05   BillKrat        Created file     
  * 
 */
-using Adventures.Framework.Results;
-using Adventures.Model.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Adventures.Model.Results
+namespace Adventures.Framework.Utils
 {
-    public class RdfTripleResults : CrudlResult
+    public class UtilFacade
     {
-        public new List<RdfTriple>? Data { get { return base.Data as List<RdfTriple>; } }
-        public RdfTripleResults(CrudlResult result)
-        {
-            base.Data = result.Data;
-        }
+
     }
 }

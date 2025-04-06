@@ -20,6 +20,8 @@ public partial class TripleStoreContext : DbContext
 
     public virtual DbSet<RdfTriple> RdfTriples { get; set; }
 
+    public virtual DbSet<VShortGuid> VShortGuids { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlite("Data Source=X:\\Blog-API\\Adventures.Model\\DataSource\\TripleStore.db");
 
@@ -28,6 +30,15 @@ public partial class TripleStoreContext : DbContext
         modelBuilder.Entity<RdfTriple>(entity =>
         {
             entity.Property(e => e.Subject).IsRequired();
+        });
+
+        modelBuilder.Entity<VShortGuid>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("v_shortGuid");
+
+            entity.Property(e => e.SubstrUuid08SubstrUuid84SubstrUuid124SubstrUuid16).HasColumnName("SUBSTR(UUID, 0, 8)||'-'||SUBSTR(UUID,8,4)||'-'||SUBSTR(UUID,12,4)||'-'||SUBSTR(UUID,16)");
         });
 
         OnModelCreatingPartial(modelBuilder);

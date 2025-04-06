@@ -1,0 +1,7 @@
+Id,Subject,Predicate,Object,Tag
+efe2b16-106a-cdc5-fff63766ced031e41,[schema]#unittest,[schema]mockdata/basic/0.1/simple,one,tag1
+879817c-f2d6-5534-5c1318ae5e5413032,[schema]#unittest,[schema]mockdata/basic/0.1/simple,two,tag2
+2e92239-df06-28e3-7a33efc8b56077ad5,[schema]#unittest,[schema]mockdata/basic/0.1/simple,three,tag3
+6d6fd4c-fb31-3c4d-30b48d93823eaea4e,[schema]#unittest,"[schema]mockdata/weather/0.1/summaries
+","""Freezing"", ""Bracing"", ""Chilly"", ""Cool"", ""Mild"", ""Warm"", 
+""Balmy"", ""Hot"", ""Sweltering"", ""Scorching""",

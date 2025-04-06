@@ -17,6 +17,10 @@
       {
          "Name": "RdfTriples",
          "ObjectType": 0
+      },
+      {
+         "Name": "v_shortGuid",
+         "ObjectType": 3
       }
    ],
    "UiHint": null,
